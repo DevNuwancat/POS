@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/static/css/output.css" rel="stylesheet">
+  <title>POS-Daily Sales</title>
+
+  <script src="/frontend/script.js" defer></script>
+  <script src="/frontend/dailySales.js" defer></script>
+
+</head>
+
+<body class="bg-gray-100 h-screen">
+
+  <!--Home-->
+  <div class="flex flex-row h-full">
+
+
+    <!--Menu-->
+    <div class="basis-[190px] bg-gray-300 border-r border-gray-300 h-screen sticky top-0 drop-shadow-2xl">
+
+      <div class="flex flex-col p-1">
+
+        <div class="flex items-center justify-center mb-6 mt-6">
+          <img src="/static/icons/starbucks.png" alt="Logo" class="h-6">
+          
+        </div>
+
+        <button class="rounded-lg px-3 py-2 hover:bg-gray-400/40 transition-colors duration-50 "
+        onclick="location.href='http://127.0.0.1:8000/'"> 
+          <div class="flex items-center gap-1">
+         
+            <img src="/static/icons/shopping-cart.png" alt="Icon" class="h-4 w-4">
+          <div class="text-[13px] pl-2">Cart</div>
+        </div>
+        </button>
+
+        <button class="rounded-lg px-3 py-2 hover:bg-gray-400/40 transition-colors duration-50" onclick="location.href='http://127.0.0.1:8000/add_products'"> 
+          <div class="flex items-center gap-1">
+            <img src="/static/icons/add-document.png" alt="Icon" class="h-4 w-4">
+          <div class="text-[13px] pl-2">Add New</div>
+        </div>
+        </button>
+
+
+         <button class="rounded-lg px-3 py-2 hover:bg-gray-400/40 transition-colors duration-50" onclick="location.href=''"> 
+          <div class="flex items-center gap-1">
+            <img src="/static/icons/ballot-check.png" alt="Icon" class="h-4 w-4">
+          <div class="text-[13px] pl-2">Show All</div>
+        </div>
+        </button>
+
+      </div>
+
+    </div>
+
+    
+    <!--Products-->
+    <div class="basis-full bg-gray-100 p-4 rounded-2xl ">
+
+     
+  
+      <h1 class="text-2xl font-medium mb-6 mt-6 ">
+        Daily Sales 
+      </h1>
+
+      <div class="flex flex-row gap-1 max-w-fit p-2">
+        <div class="flex items-center gap-3 bg-gray-200/70 rounded-lg px-3 py-2">
+          <img src="/static/icons/daily-calendar.png" alt="" class="h-5">
+          <div id="todayDate">2025.10.20</div>
+          <img src="/static/icons/coins.png" alt="" class="h-5">
+          <div class="text-gray-500" id="totalSum">Total Sales: 10000.00</div>
+          <div class="">Sales<span id="salesCount">0</span></div>
+        </div>
+         
+  
+      </div>
+      
+      
+      
+      <div class="mb-6"></div>
+      <!--Header-->
+
+      <!--Main Bar-->
+      <div class="flex flex-row gap-4  rounded-lg mb-2">
+          <div class="basis-18 text-xs text-gray-500 ">Time</div>
+          <div class="basis-32 text-xs text-gray-500 ">Total Price(Rs.)</div>
+          <div class="basis-32 text-xs text-gray-500 ">Paid Price(Rs.)</div>
+          <div class="basis-32 text-xs text-gray-500 ">Balance Price(Rs.)</div>
+          <div class="basis-auto text-xs text-gray-500 ">Qty</div>
+        </div>
+
+        <!--Separator-->
+         <hr class="border-t border-gray-300/90 mb-4">
+
+        <!--Data Row with border -->
+        <div class=" rounded-lg mb-4" id="salesContainer">
+
+        <!--Main Bar-->
+        <div class="flex flex-row gap-4  p-1 bg-gray-200/70 items-center mb-2">
+            <div class="basis-18 text-sm text-left">09:40 PM</div>
+            <div class="basis-32 text-sm ">6000.00</div>
+            <div class="basis-32 text-sm ">4000.00</div>
+            <div class="basis-32 text-sm ">5600.00</div>
+            <div class="basis-18 text-sm ">4</div>
+            <div class="basis- text-right">
+               <button class="flex gap-2 mx-1 bg-white p-0.5 px-2 rounded-md drop-shadow-2xl hover:bg-gray-100 transition-colors duration-300 text-sm item items-center"
+            onclick=""
+            >
+            <img src="/static/icons/eye.png" alt="" class="h-4 w-4">
+            View Products</button>
+            </div>
+        </div>
+
+
+        <!-- Small Details -->
+        <div class="Product-details">
+        
+        
+        <div class="flex flex-row items-center gap-2 p-1 mb-0.5">
+          <div class="text-xs basis-6">2x</div>
+          <div class="text-xs basis-48">Tea</div>
+          <div class="text-xs">1000.00</div>
+        </div>
+
+        <div class="flex flex-row items-center gap-2 p-1 mb-0.5">
+          <div class="text-xs basis-6">12x</div>
+          <div class="text-xs basis-48">Yougut</div>
+          <div class="text-xs">180.00</div>
+        </div>
+      
+        </div>
+        </div>
+
+        
+
+        
+
+
+
+
+
+
+
+
+        </div>
+
+        
+
+
+
+       
+        
+
+      
+
+       
+
+        <div id="" class=""></div>
+
+      </div>
+
+      <div id="editModal" 
+        class="fixed inset-0 bg-white/5 backdrop-blur-sm items-center justify-center z-50 hidden">
+        <div class="relative bg-white  rounded-lg shadow_md p-3 w-[409px]">
+
+          <button onclick="closeEditModal()" 
+            id="add-product-btn" class="absolute w-6 h-6 rounded-full border-2  top-4 right-4  hover:text-gray-500 transition-colors duration-200 text-[12px] text-gray-300 font-bold mb-2 hover:bg-gray-100 hover:ring-1 hover:ring-gray-300">
+            X
+          </button>
+
+          <h1 class="font-light mb-4 px-2 mt-2">Update</h1>
+
+          <hr class="border-t border-gray-300/20 mb-4">
+
+          <div class="flex gap-2 mt-6">
+            <input type="text" id="update-product-name" placeholder="Product Name" class="bg-gray-200 p-2   rounded-lg mb-4 w-96 placeholder-gray-500/40 text-sm focus:border-gray-500/70 focus:outline-none border border-gray-300">
+
+            <input type="number" id="update-product-price" placeholder="Price (Rs.)" step="0.01" class="bg-gray-200 p-2 rounded-lg mb-4 w-32 placeholder-gray-500/40 text-sm
+          focus:border-gray-500/70 focus:outline-none border border-gray-300 ">
+          </div>
+        
+          
+          <button onclick="updateProduct()"
+          id="update-product-btn"
+           class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300/60 transition-colors duration-200 text-sm mb-2 mt-1">
+          Update Product
+          </button>
+        </div>
+      </div>
+          
+    </div>
+  </div>
+
+      <!--
+      <div class="">
+        <input type="text" id="product-name" placeholder="Product Name" class="border border-gray-300 p-2 rounded-lg mb-4 w-96 placeholder-gray-500/40">
+
+        <input type="number" id="product-price" placeholder="Price (Rs.)" step="0.01" class="border border-gray-300 p-2 rounded-lg mb-4 w-48 placeholder-gray-500/40">
+
+        <button onclick="addProduct()" id="add-product-btn" class="bg-black text-white px-4 py-2 rounded-lg hover:bg-black/70 transition-colors duration-200">
+          Add Product
+        </button>
+      -->
+
+      </div>
+    
+</body>
+
+</html>
