@@ -19,8 +19,8 @@ async function loadProducts() {
                     <div class="flex">
                         
                         <div class="flex flex-col ">
-                            <div class="text-sm font-medium">${product.name}</div>
-                            <div class="text-sm font-light text-gray-500">Rs.${product.price.toFixed(2)}</div>
+                            <div class="text-xs font-medium w-32 overflow-hidden text-ellipsis whitespace-nowrap">${product.name}</div>
+                            <div class="text-xs font-light text-gray-500">Rs.${product.price.toFixed(2)}</div>
                         </div>
                     </div>
                 </div>
@@ -63,6 +63,7 @@ function addToCart(product) {
     }
 
     updateCartUI();
+    scrollToTop() 
 }
 
 function updateCartUI() {
@@ -77,14 +78,23 @@ function updateCartUI() {
         div.className = 'cart-item';
         div.innerHTML = `
             <div class="flex flex-col gap-0.5 m-2">
-                <div class="font-medium text-sm">${item.name}</div>
                 <div class="flex items-center justify-between">
-                    <div class="font-light text-gray-600 text-xs">Rs.${item.price.toFixed(2)} x ${item.quantity}</div>
+                <div class="font-medium text-sm w-48 overflow-hidden text-ellipsis whitespace-nowrap">${item.name}</div>
+                <button class="text-gray-300 hover:text-gray-600  text-xs bg-gray-200 rounded-md w-4 h-4 transition-colors duration-50"
+                 onclick="removeFromCart(${item.id})">X</button>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="font-light text-gray-600 text-xs">Rs.${item.price.toFixed(2)} x
+                    <input type="number" min="1" value="${item.quantity}"
+                    style="width: 30px;" onchange="changeQuantity(${item.id}, this.value)">
+                    </div>
+                    
                     <div class=" text-gray-800 text-sm">Rs.${(item.price * item.quantity).toFixed(2)}</div>
                 </div>
             </div>
         `;
         cartList.appendChild(div);
+        
     });
 
     const totalDiv = document.getElementById('total');
@@ -106,8 +116,31 @@ function updateCartUI() {
         }
     });
 
+
    
 
+
+}
+
+function changeQuantity(itemID, newQuantity){
+    newQuantity = parseInt(newQuantity);
+    if(isNaN(newQuantity) || newQuantity <= 0) {
+        alert('Please enter a valid quantity.');
+        return;
+    }
+
+    const item = cart.find(item => item.id === itemID);
+    if (item) {
+        item.quantity = newQuantity;
+        updateCartUI();
+    }
+}
+
+
+function removeFromCart(deleteID){
+    cart = cart.filter(item => item.id !== deleteID);
+
+    updateCartUI();
 
 }
 
@@ -141,6 +174,10 @@ async function addProduct() {
     }
 }
 
+function scrollToTop() {
+    const cart = document.getElementById('cart');
+    cart.scrollTop =cart.scrollHeight; // Scroll to the bottom of the cart
+}
 
 async function checkOut() {
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -151,6 +188,11 @@ async function checkOut() {
         alert('Insufficient amount paid. Please enter a valid amount.');
         return;
     }
+    if (cart.length === 0) {
+        alert('Your cart is empty. Please add items to the cart before checking out.');
+        return;
+    }
+    
 
     const balance = paidAmount - total;
 
