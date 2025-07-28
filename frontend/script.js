@@ -116,11 +116,16 @@ function updateCartUI() {
         }
     });
 
-
-   
-
-
 }
+function clearCart() {
+    cart = [];
+    updateCartUI();
+    document.getElementById('enterAmount').value = '';
+    document.getElementById('sub-total').innerHTML = 'Balance: Rs.0.00';
+    document.getElementById('total').innerHTML = 'Total: Rs.0.00';
+    document.getElementById('cart').innerHTML = ''; // Clear cart
+}
+
 
 function changeQuantity(itemID, newQuantity){
     newQuantity = parseInt(newQuantity);
@@ -168,6 +173,11 @@ async function addProduct() {
 
         const data = await res.json();
         alert(`Product added: ${data.name} - Rs.${data.price.toFixed(2)}`);
+
+        document.getElementById('product-name').value = '';
+        document.getElementById('product-price').value = '';
+
+
         loadProducts(); // Refresh product list
     } catch (error) {
         console.error('Error adding product:', error);
@@ -224,7 +234,7 @@ async function checkOut() {
         }
 
         const result = await response.json();
-        alert(`Checkout successful! Receipt ID: ${result.id}`);
+        alert(`Checkout successful! Printing bill...`);
         console.log('message', result.message);
 
         // Restart cart after checkout

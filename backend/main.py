@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from typing import List
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
-from escpos.printer import File
+from escpos.printer import File, Usb
 from datetime import datetime, date
 import os
 
@@ -165,6 +165,34 @@ def delete_product(product_id: int):
 
     return {"message": "Product deleted successfully"}
 
+
+@app.delete("/checkout/today")
+def delete_checkout():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    # Get today's date
+    today_date = date.today().strftime("%Y-%m-%d")
+
+    # Delete the bill
+    cursor.execute("DELETE FROM bills WHERE DATE(timestamp) = ?", (today_date,))
+    bill_ids = [row[0] for row in cursor.fetchall()]
+
+    # Delete related bill_items
+    if bill_ids:
+        cursor.executemany("DELETE FROM bill_items WHERE bill_id = ?", [(bid,) for bid in bill_ids])
+
+    # Delete bills
+    cursor.execute("DELETE FROM bills WHERE DATE(timestamp) = ?", (today_date,))
+
+    conn.commit()
+    conn.close()
+
+    return {"message": "Today's checkouts deleted successfully"}
+
+
+
+
 # Checkout endpoint Record Sales
 @app.post("/checkout")
 def checkout(data: CheckoutData):
@@ -193,6 +221,7 @@ def checkout(data: CheckoutData):
 
     try:
         printer = File("recept/lp1.txt") 
+        #printer = Usb(0x04b8, 0x0202)
 
 
         now = datetime.now()

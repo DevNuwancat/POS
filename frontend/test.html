@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/static/css/output.css" rel="stylesheet">
+  <title>POS-Daily Sales</title>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script src="/frontend/script.js" defer></script>
+  
+  
+</head>
+  <body class="h-screen bg-gray-100">
+    <div id="print">
+      <h1>Hello PDF</h1>
+      <p>This should print to PDF.</p>
+    </div>
+    <button onclick="printPDF()" class="bg-yellow-50 p-2 hover:bg-amber-400">Download</button>
+
+    <script>
+      function printPDF() {
+        const element = document.getElementById("print");
+        const opt = {
+          margin: 1,
+          filename: "test.pdf",
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
+        };
+        html2pdf().set(opt).from(element).save();
+      }
+    </script>
+  </body>
+</html>
