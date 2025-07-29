@@ -220,8 +220,8 @@ def checkout(data: CheckoutData):
     # == ESC/POS == # 
 
     try:
-        printer = File("recept/lp1.txt") 
-        #printer = Usb(0x04b8, 0x0202)
+        #printer = File("recept/lp1.txt") 
+        printer = Usb(0x1fc9, 0x2016)
 
 
         now = datetime.now()
