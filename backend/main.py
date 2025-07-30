@@ -261,6 +261,8 @@ def checkout(data: CheckoutData):
         # Trigger Cash Drawer
         printer.cashdraw(2)
         printer.cut()
+        printer.close()
+        return{"message": "Checkout successful, receipt printed"}
     
     except Exception as e:
         print(f"Error printing receipt: {e}")
